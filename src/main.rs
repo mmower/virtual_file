@@ -26,27 +26,19 @@ struct BackingFile {
 //     sections: Vec<Section>,
 // }
 
-// pub fn new_from_file(name: &str) -> BackingFile {
-//     let content = fs::read_to_string("Cargo.toml").expect("Unable to read file");
-//     BackingFile {
-//         name: String::from(name),
-//         lines: content.lines(),
-//     }
-// }
-
-pub fn new_from_file(name: &str) -> BackingFile {}
-
-fn main() {
-    let content = fs::read_to_string("dtrh.rez").expect("Unable to read file!");
-    // let lines: Vec<&str> = content.lines().collect();
+fn new_from_file(name: &str) -> BackingFile {
+    let content = fs::read_to_string(name).expect("Unable to read file!");
     let lines: Vec<String> = content.lines().map(|s: &str| String::from(s)).collect();
     let count = lines.len();
-
-    let backing_file = BackingFile {
-        name: String::from("dtrh.rez"),
+    BackingFile {
+        name: String::from(name),
         lines: lines,
         size: count,
-    };
+    }
+}
+
+fn main() {
+    let backing_file = new_from_file("dtrh.rez");
 
     println!("Backing file: {}", backing_file.name);
     println!("Contents: {:?}", backing_file.lines);
